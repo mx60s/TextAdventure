@@ -1,22 +1,41 @@
-class Character{
-    constructor(name, health){
-        this.name = name;
-        this.health = health;
-    }
+class Character {
+  constructor (health) {
+    this.health = health
+  }
 
-    take_damage(foe_strength){
-        this.health -= Math.random * 10 + foe_strength;
+  generateAttack (weapon) {}
+
+  takeDamage (dmg) {
+    health -= dmg
+  }
+}
+
+class Hero extends Character {
+  name = 'Xyzzy'
+
+  recover () {
+    if (health < 10) health++
+  }
+  generateAttack (weapon) {}
+}
+
+class Thief extends Character {
+    name = 'thief';
+}
+
+class Troll extends Character {
+    name = 'troll';
+}
+
+/* class Character {
+    constructor(brain, combat, appearance){
+        this.brain = brain
+        this.combat = combat
+        this.appearance = appearance
     }
 }
 
-class Hero extends Character{
-    name = "hero";
+class Brain{
+    constructor() {}
 
-}
-
-class Grue extends Character {}
-
-class Wizard extends Character {}
-
-class Troll extends Character {}
-
+} */
