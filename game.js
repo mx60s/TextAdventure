@@ -20,10 +20,11 @@ class Game {
   generateRooms () {}
 
   moveRooms (direction) {
-    if (currentRoom.exits.has(direction)) {
-      if (!currentRoom.exits[direction].locked) {
-        // nope, rooms will need to be a linked list or map
-      }
+    if (
+      currentRoom.getNeighbor(direction) &&
+      !currentRoom.exits[direction].locked
+    ) {
+      currentRoom = currentRoom.getNeighbor(direction)
     } else {
       console.log("You can't go that way.")
     }
