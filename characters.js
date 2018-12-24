@@ -1,12 +1,17 @@
 class Character {
   constructor (health) {
     this.health = health
+    inventory = new Container('inventory', '', '', '')
   }
 
   generateAttack (weapon) {}
 
   takeDamage (dmg) {
     health -= dmg
+  }
+
+  take (object) {
+    inventory.contents.push(object)
   }
 }
 
@@ -20,11 +25,11 @@ class Hero extends Character {
 }
 
 class Thief extends Character {
-    name = 'thief';
+  name = 'thief'
 }
 
 class Troll extends Character {
-    name = 'troll';
+  name = 'troll'
 }
 
 /* class Character {

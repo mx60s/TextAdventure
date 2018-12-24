@@ -1,5 +1,3 @@
-var fs = require('fs')
-
 var adventure = new Game()
 var save = new Game()
 var input = ''
@@ -7,8 +5,8 @@ var input = ''
 console.log('============ Welcome to TextAdventure ============')
 
 while (true) {
-  console.log(adventure.rooms[0].print())
+  console.log(adventure.currentRoom.print())
 
   input = prompt('>')
-  adventure.processCommand(input)
+  if (input.length > 0) adventure.processCommand(input)
 }

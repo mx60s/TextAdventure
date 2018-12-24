@@ -1,16 +1,21 @@
 class Room {
-  constructor (name, description, features, dark, foe) {
+  constructor (name, description, dark, features, foe) {
     this.name = name
     this.description = description // description will include exits
     this.features = features
     this.dark = dark // bool
-    this.visited = false
     this.foe = foe // default?
-    this.exits = []
-    this.north = null
-    this.east = null
-    this.south = null
-    this.west = null
+    visited = false
+    exits = {
+      north: new Door(),
+      east: new Door(),
+      south: new Door(),
+      west: new Door()
+    }
+    north = null
+    east = null
+    south = null
+    west = null
   }
 
   print () {
