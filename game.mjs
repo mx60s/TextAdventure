@@ -35,10 +35,26 @@ export class Game {
       ''
     )
 
+    var kitchen = new Room(
+      'Kitchen',
+      'You are standing in the doorway of an airy kitchen, with light pouring in from the windows to the backyard. A fine layer of dust coats the table.',
+      false,
+      []
+    )
+
+    var attic = new Room(
+      'Attic',
+      'You face a long dark expanse, and the light of your flashlight only extends a few feet in front of you. There are several boxes of scattered holiday decorations, but you get the sense that no one has been here in a long time.',
+      true,
+      []
+    )
+
     frontYard.north = entryRoom
     entryRoom.south = frontYard
+    entryRoom.west = kitchen
+    kitchen.east = entryRoom
 
-    var rooms = [frontYard, entryRoom]
+    var rooms = [frontYard, entryRoom, kitchen]
     return rooms
   }
 

@@ -22,11 +22,15 @@ export class Room {
 
   print () {
     var output = this.name + '\n'
-    if (!this.visited) output += this.description + ' '
-    if (this.foe) output += this.foe.encounter()
+    if(!this.dark){
+      if (!this.visited) output += this.description + ' '
+      if (this.foe) output += this.foe.encounter()
 
-    for (var i = 0; i < this.features.length; i++) {
-      output += printItem(this.features[i])
+      for (var i = 0; i < this.features.length; i++) {
+        output += printItem(this.features[i])
+      }
+    }else{
+      output = 'The room is pitch black. You run the risk of being whisked away by the spirits that linger here.'
     }
     return output
   }

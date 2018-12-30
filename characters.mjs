@@ -41,17 +41,4 @@ class Troll extends Character {
   }
 }
 
-/* class Character {
-    constructor(brain, combat, appearance){
-        this.brain = brain
-        this.combat = combat
-        this.appearance = appearance
-    }
-}
-
-class Brain{
-    constructor() {}
-
-} */
-
 export { Character, Hero, Thief }
