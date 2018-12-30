@@ -29,16 +29,16 @@ class Hero extends Character {
   generateAttack (weapon) {}
 }
 
-class Thief extends Character {
+class Ghost extends Character {
   constructor (health) {
     super(health)
   }
 }
 
-class Troll extends Character {
+class Bat extends Character {
   constructor (health) {
     super(health)
   }
 }
 
-export { Character, Hero, Thief }
+export { Character, Hero, Ghost, Bat }

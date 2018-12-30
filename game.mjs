@@ -1,12 +1,12 @@
 import Room from './rooms'
 import { Item, Container, Door } from './features'
 import TextParser from './parsing'
-import { Character, Hero, Thief } from './characters'
+import { Character, Hero, Ghost, Bat } from './characters'
 
 export class Game {
   constructor () {
     this.adventurer = new Hero()
-    this.thief = new Thief()
+    this.ghost = new Ghost()
     this.rooms = this.generateRooms()
     this.currentRoom = this.rooms[0]
     this.parser = new TextParser()
@@ -30,7 +30,7 @@ export class Game {
 
     var entryRoom = new Room(
       'Entry room',
-      'You are standing in a small tiled entry room.',
+      'You are standing in a small tiled entry room. A long staircase stretches into darkness to the north, and to the west, a door is slightly cracked open.',
       true,
       ''
     )
@@ -47,6 +47,18 @@ export class Game {
       'You face a long dark expanse, and the light of your flashlight only extends a few feet in front of you. There are several boxes of scattered holiday decorations, but you get the sense that no one has been here in a long time.',
       true,
       []
+    )
+
+    // white canopy with small lilacs sewn into it. There is someone behind it, lying on the bed.
+    var bat = new Bat(5)
+    var key = new Item('key', 'The key is small but heavy.', 'A tarnished silver key lies on the bed.')
+    var canopy = new Container('canopy','A white canopy with a small hoop at the top, scattered with silk lilacs sewn into the fabric.','A delicate canopy decorated with small silk lilacs is closed around the bed', [bat, key])
+
+    var myRoom = new Room(
+      'Girl\'s bedroom',
+      'You are standing in what looks to be someone\'s bedroom. Two windows look out to the backyard. A delicate canopy decorated with small silk lilacs is closed around the bed.',
+      false,
+      [canopy]
     )
 
     frontYard.north = entryRoom

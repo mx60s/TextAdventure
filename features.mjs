@@ -1,15 +1,14 @@
 class Item {
-  constructor (name, description, abilities, where) {
+  constructor (name, description, where) {
     this.name = name
     this.description = description
-    this.abilities = abilities // this is a simplified version of how it should be
     this.where = where // can I give this a default value? "There is a ______ here."
   }
 }
 
 class Container extends Item {
-  constructor (name, description, contents) {
-    super(name, description, '', '')
+  constructor (name, description, where, contents) {
+    super(name, description, where)
     this.contents = contents
   }
 }
