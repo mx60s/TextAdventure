@@ -16,7 +16,11 @@ while (cont) {
   if (input == 'Quit' || input == 'q' || input == 'Q') {
     console.log('Thanks for playing!')
     break
-  } else {
+  } else if(input == 'save'){
+    save = adventure
+    console.log('Saved.')
+  } 
+  else {
     adventure.processCommand(input)
   }
 }
