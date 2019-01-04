@@ -1,7 +1,7 @@
 class Character {
   constructor (health) {
     this.health = health
-    this.inventory = new Container('inventory', '', '', '')
+    this.inventory = new Container('inventory', '', '', [])
   }
 
   generateAttack (weapon) {}
@@ -11,7 +11,16 @@ class Character {
   }
 
   take (object) {
-    inventory.contents.push(object)
+    this.inventory.contents.push(object)
+    return "Taken."
+  }
+
+  showInventory() {
+    var out = this.inventory.open()
+    console.log(out[0])
+    var output = out[0]
+    this.inventory.open = false
+    return output
   }
 }
 

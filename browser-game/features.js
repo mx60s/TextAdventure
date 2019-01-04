@@ -11,6 +11,21 @@ class Container extends Item {
     super(name, description, where)
     this.contents = contents
   }
+  open () {
+    var output = []
+    var objects = []
+    if (this.contents.length > 0) {
+      output.push(this.name + ' contents:')
+      for (var i = 0; i < this.contents.length; i++) {
+        output.push('+ ' + this.contents[i].name)
+        objects.push(this.contents[i])
+      }
+    } else {
+      output.push("It's empty.")
+    }
+    var out = [output, objects]
+    return out
+  }
 }
 
 class Door {

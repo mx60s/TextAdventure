@@ -11,17 +11,18 @@ class Game {
     // escaping out the window
     var frontYardText =
       'You are facing a stately blue house to the north. Dry leaves litter the ground from the looming oak trees. The front door hangs loosley on its hinges, slightly ajar.'
-    var mailbox = new Item('mailbox', '', 'open', '')
     var letter = new Item(
       'crisp letter',
       'Idk what I want this to say yet!',
-      ['take', 'keep', 'grab'],
       ''
     )
-    var frontYard = new Room('Front of house', frontYardText, false, [
-      mailbox,
-      letter
-    ])
+    var flashlight = new Item(
+      'flashlight',
+      'A slightly rusted but usable flashlight.',
+      ''
+    )
+    var mailbox = new Container('mailbox', '', '', [letter, flashlight])
+    var frontYard = new Room('Front of house', frontYardText, false, [mailbox])
 
     var entryRoom = new Room(
       'Entry room',
@@ -46,12 +47,21 @@ class Game {
 
     // white canopy with small lilacs sewn into it. There is someone behind it, lying on the bed.
     var bat = new Bat(5)
-    var key = new Item('key', 'The key is small but heavy.', 'A tarnished silver key lies on the bed.')
-    var canopy = new Container('canopy','A white canopy with a small hoop at the top, scattered with silk lilacs sewn into the fabric.','A delicate canopy decorated with small silk lilacs is closed around the bed', [bat, key])
+    var key = new Item(
+      'key',
+      'The key is small but heavy.',
+      'A tarnished silver key lies on the bed.'
+    )
+    var canopy = new Container(
+      'canopy',
+      'A white canopy with a small hoop at the top, scattered with silk lilacs sewn into the fabric.',
+      'A delicate canopy decorated with small silk lilacs is closed around the bed',
+      [bat, key]
+    )
 
     var myRoom = new Room(
-      'Girl\'s bedroom',
-      'You are standing in what looks to be someone\'s bedroom. Two windows look out to the backyard. A delicate canopy decorated with small silk lilacs is closed around the bed.',
+      "Girl's bedroom",
+      "You are standing in what looks to be someone's bedroom. Two windows look out to the backyard. A delicate canopy decorated with small silk lilacs is closed around the bed.",
       false,
       [canopy]
     )
@@ -94,6 +104,10 @@ class Game {
     var commandTokens = command.split(' ')
     var output = []
     switch (commandTokens[0]) {
+      case 'inventory':
+        output = output.concat(this.adventurer.showInventory())
+        break
+
       case 'attack':
         output.push(attackTurn(commandTokens[1]))
         break
@@ -103,9 +117,13 @@ class Game {
         break
 
       case 'take':
+        // dont forget to remove the thing from the room!!!
         var feature
-        for (feature in this.currentRoom.features) {
-          if (feature.name == commandTokens[1]) this.adventurer.take(feature)
+        for (var i = 0; i < this.currentRoom.features.length; i++) {
+          feature = this.currentRoom.features[i]
+          if (feature.name == commandTokens[1]) {
+            output.push(this.adventurer.take(feature))
+          }
         }
         break
 
@@ -119,6 +137,21 @@ class Game {
       case 'look':
         this.currentRoom.visited = false
         output = output.concat(this.currentRoom.print())
+        break
+
+      case 'open':
+        var feature = this.currentRoom.features[0]
+        var objects
+        var newOutput
+        try {
+          var opens = feature.open()
+          newOutput = opens[0]
+          objects = opens[1]
+          output = output.concat(newOutput)
+          this.currentRoom.features = this.currentRoom.features.concat(objects)
+        } catch {
+          output.push("You can't open that.")
+        }
         break
 
       default:

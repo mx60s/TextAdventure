@@ -1,10 +1,10 @@
 class Room {
-  constructor (name, description, dark, features, foe) {
+  constructor (name, description, dark, features) {
     this.name = name
     this.description = description // description will include exits
     this.features = features
     this.dark = dark // bool
-    this.foe = foe // default?
+    // this.foe = foe // default?
     this.visited = false
     this.exits = {
       north: new Door(false),
@@ -21,19 +21,20 @@ class Room {
   print () {
     var output = []
     output.push(this.name)
-    if(!this.dark){
+    if (!this.dark) {
       if (!this.visited) output.push(this.description)
       if (this.foe) output.push(this.foe.encounter())
 
-      //for (var i = 0; i < this.features.length; i++) {
-        //output.push(printItem(this.features[i]))
-      //}
-    }else{
-      output.push('The room is pitch black. You run the risk of being whisked away by the spirits that linger here.')
+      for (var i = 0; i < this.features.length; i++) {
+        output.push(printItem(this.features[i]))
+      }
+    } else {
+      output.push(
+        'The room is pitch black. You run the risk of being whisked away by the spirits that linger here.'
+      )
     }
     this.visited = true
     return output
-    
   }
 
   getNeighbor (direction) {
