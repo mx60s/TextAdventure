@@ -2,7 +2,7 @@ class Item {
   constructor (name, description, where) {
     this.name = name
     this.description = description
-    this.where = where // can I give this a default value? "There is a ______ here."
+    this.where = where
   }
 }
 
@@ -10,6 +10,27 @@ class Container extends Item {
   constructor (name, description, where, contents) {
     super(name, description, where)
     this.contents = contents
+  }
+
+  open () {
+    var objects = []
+    if (this.contents.length > 0) {
+      console.log(this.name + ' contents:')
+      for (var i = 0; i < this.contents.length; i++) {
+        console.log('+ ' + this.contents[i].name)
+        objects.push(this.contents[i])
+      }
+    } else {
+      console.log("It's empty.")
+    }
+    return objects
+  }
+}
+
+class Light extends Item {
+  constructor (name, description, where){
+    super(name, description, where)
+    this.on = false
   }
 }
 
@@ -31,4 +52,4 @@ export function examine (item) {
   else return "There's nothing special about it."
 }
 
-export { Item, Container, Door }
+export { Item, Light, Container, Door }

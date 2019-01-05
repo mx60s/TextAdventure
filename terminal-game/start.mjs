@@ -7,19 +7,23 @@ var input = ''
 var cont = true
 
 console.log('\n============ Welcome to TextAdventure ============\n')
+console.log(adventure.currentRoom.print())
 
 while (cont) {
-  console.log('\n' + adventure.currentRoom.print())
   adventure.currentRoom.visited = true
   console.log()
   var input = readlineSync.question('>')
+  console.log()
   if (input == 'Quit' || input == 'q' || input == 'Q') {
     console.log('Thanks for playing!')
     break
   } else if(input == 'save'){
     save = adventure
     console.log('Saved.')
-  } 
+  } else if(input == 'load'){
+    adventure = save
+    console.log(adventure.currentRoom.print())
+  }
   else {
     adventure.processCommand(input)
   }

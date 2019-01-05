@@ -22,7 +22,7 @@ export class TextParser {
         }
       }
       // Re-examine the room
-      else if (input == 'look around') {
+      else if (input == 'look around' || input == 'inventory') {
         return input
       }
       // Picking something up
@@ -36,7 +36,12 @@ export class TextParser {
       // Moving rooms
       else if (this.directionWords.includes(tokens[0])) {
         return 'move ' + tokens[0]
-      } else {
+      }
+      // Opening something
+      else if (tokens[0] == 'open'){
+        return 'open ' + tokens[1]
+      }
+      else {
         return 'Could you repeat that?'
       }
     }

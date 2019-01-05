@@ -12,12 +12,12 @@ class Character {
 
   take (object) {
     this.inventory.contents.push(object)
-    return "Taken."
+    return 'Taken.'
   }
 
-  showInventory() {
+  showInventory () {
     var out = this.inventory.open()
-    console.log(out[0])
+    // console.log(out[0])
     var output = out[0]
     this.inventory.open = false
     return output

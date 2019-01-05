@@ -20,9 +20,9 @@ export class Room {
     this.west = null
   }
 
-  print () {
+  print (flashlight) {
     var output = this.name + '\n'
-    if(!this.dark){
+    if(!this.dark || flashlight.on){
       if (!this.visited) output += this.description + ' '
       if (this.foe) output += this.foe.encounter()
 

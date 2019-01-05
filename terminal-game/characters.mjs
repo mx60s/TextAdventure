@@ -3,7 +3,7 @@ import { Item, Container, Door } from './features'
 class Character {
   constructor (health) {
     this.health = health
-    this.inventory = new Container('inventory', '', '', '')
+    this.inventory = new Container('inventory', '', '', [])
   }
 
   generateAttack (weapon) {}
@@ -13,7 +13,13 @@ class Character {
   }
 
   take (object) {
-    inventory.contents.push(object)
+    this.inventory.contents.push(object)
+    console.log('Taken.')
+  }
+
+  showInventory () {
+    this.inventory.open()
+    this.inventory.open = false
   }
 }
 
