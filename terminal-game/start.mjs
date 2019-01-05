@@ -16,7 +16,7 @@ while (cont) {
   if (adventure.currentRoom.foe) {
     adventure.currentRoom.foe.reveal()
   }
-  var input = readlineSync.question('>')
+  var input = readlineSync.question('> ')
   if (input == 'Quit' || input == 'quit' || input == 'q' || input == 'Q') {
     console.log('Thanks for playing!\n')
     cont = false

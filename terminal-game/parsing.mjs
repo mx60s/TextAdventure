@@ -2,8 +2,8 @@ export class TextParser {
   constructor () {
     this.attackWords = ['stab', 'attack', 'swing', 'hit', 'strike']
     this.possessionWords = ['take', 'grab', 'keep']
-    this.objectNouns = ['letter', 'mailbox']
-    this.enemyWords = ['ghost', 'bat', 'bats', 'swarm']
+    this.objectNouns = ['letter', 'mailbox', 'key']
+    this.enemyWords = ['spirit', 'bat', 'bats', 'swarm']
     this.directionWords = ['north', 'east', 'south', 'west']
     this.senseWords = ['look', 'examine', 'read']
   }
@@ -44,6 +44,12 @@ export class TextParser {
       // Opening something
       else if (tokens[0] == 'open') {
         return 'open ' + tokens[1]
+      }
+      // Help
+      else if (tokens[0] == 'help') {
+        var helptext =
+          'Moving around: [north | south | east | west] \nPick something up: [take | grab | keep] <object name> \nExamine things: [examine | look | read] <object name> \nAttacking: [stab | attack | swing | hit | strike] <enemy name>'
+        return helptext
       } else {
         return "I'm sorry, I don't understand that."
       }

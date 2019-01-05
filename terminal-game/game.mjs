@@ -16,7 +16,7 @@ export class Game {
     // escaping out the window
     var frontYardText =
       'You are facing a stately blue house to the north. Dry leaves litter the ground from the looming oak trees. The front door hangs loosley on its hinges, slightly ajar.'
-    var letter = new Item('letter', 'Idk what I want this to say yet!', '', '')
+    var letter = new Item('letter', "Welcome to this little text adventure, made by Maggie von Ebers. Type 'help' at any time to get a list of commands.", '', '')
     var flashlight = new Item(
       'flashlight',
       'A slightly rusted but usable flashlight.',
@@ -58,7 +58,6 @@ export class Game {
       spirit
     )
 
-    // var bat = new Bat()
     var key = new Item(
       'key',
       'The key is small but strangely heavy.',
