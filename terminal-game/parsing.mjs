@@ -28,9 +28,9 @@ export class TextParser {
       // Picking something up
       else if (this.possessionWords.includes(tokens[0])) {
         if (tokens[1] == 'mailbox') {
-          return 'The mailbox is too heavy. Why in the world would you want it anyway?'
+          return "Of course you can't take the mailbox. Smartass."
         } else if (this.enemyWords.includes(tokens[1])) {
-          return "You can't take prisoners!"
+          return "You can't take prisoners, what's wrong with you?"
         } else return 'take ' + tokens[1]
       }
       // Reading/Examining

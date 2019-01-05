@@ -1,13 +1,12 @@
 import Room from './rooms'
 import { Item, Container, Door } from './features'
 import TextParser from './parsing'
-import { Character, Hero, Ghost, Bat } from './characters'
+import { Character, Hero, Spirit, Bat } from './characters'
 
 export class Game {
   // Maybe define the rooms in the start.mjs file? Might be cleaner there.
   constructor () {
-    this.adventurer = new Hero()
-    this.ghost = new Ghost()
+    this.adventurer = new Hero(10)
     this.rooms = this.generateRooms()
     this.currentRoom = this.rooms[0]
     this.parser = new TextParser()
@@ -25,12 +24,21 @@ export class Game {
       'The flashlight turns on as you pick it up.'
     )
     var mailbox = new Container('mailbox', '', '', '', [letter, flashlight])
-    var frontYard = new Room('Front of house', frontYardText, false, [mailbox])
+    var frontYard = new Room(
+      'Front of house',
+      frontYardText,
+      false,
+      [mailbox],
+      ''
+    )
+
+    var spirit = new Spirit()
 
     var entryRoom = new Room(
       'Entry room',
       'You are standing in a small tiled entry room. A long staircase stretches into darkness to the north. There are also unlocked doors to the west and to the east.',
       true,
+      '',
       ''
     )
 
@@ -38,18 +46,19 @@ export class Game {
       'Kitchen',
       'You are standing in the doorway of an airy kitchen, with light pouring in from the windows to the backyard. A fine layer of dust coats the table.',
       false,
-      []
+      [],
+      ''
     )
 
     var attic = new Room(
       'Attic',
       'You face a long dark expanse, and the light of your flashlight only extends a few feet in front of you. There are several boxes of scattered holiday decorations, but you get the sense that no one has been here in a long time.',
       true,
-      []
+      [],
+      spirit
     )
 
-    // white canopy with small lilacs sewn into it. There is someone behind it, lying on the bed.
-    var bat = new Bat(5)
+    // var bat = new Bat()
     var key = new Item(
       'key',
       'The key is small but strangely heavy.',
@@ -59,28 +68,41 @@ export class Game {
     var canopy = new Container(
       'canopy',
       'A white canopy with a small hoop at the top, scattered with silk lilacs sewn into the fabric.',
-      'A delicate canopy decorated with small silk lilacs is closed around the bed',
+      'A delicate canopy decorated with small silk lilacs is closed around the bed.',
       '',
-      [bat, key]
+      [key]
     )
 
     var myRoom = new Room(
       "Girl's bedroom",
-      "You are standing in what looks to be someone's bedroom. Two windows look out to the backyard. A delicate canopy decorated with small silk lilacs is closed around the bed.",
+      "You are standing in what looks to be someone's bedroom. Two windows look out to the backyard.",
       false,
-      [canopy]
+      [canopy],
+      ''
     )
 
     var hallway = new Room(
       'Upstairs hallway',
       'This long hallway has several closed doors to the east, and one sliver of weak light issuing from a door to the west.',
       true,
-      []
+      [],
+      ''
     )
 
     frontYard.north = entryRoom
+
     entryRoom.south = frontYard
     entryRoom.west = kitchen
+    entryRoom.north = hallway
+
+    hallway.south = entryRoom
+    hallway.up = attic
+    hallway.west = myRoom
+
+    myRoom.east = hallway
+
+    attic.down = hallway
+
     kitchen.east = entryRoom
 
     var rooms = [frontYard, entryRoom, kitchen]
@@ -97,6 +119,7 @@ export class Game {
     } else console.log("You don't see " + enemyName + ' in this room.')
   }
 
+  // Add functionality for spirits
   moveRooms (direction) {
     if (
       this.currentRoom.getNeighbor(direction) &&
@@ -105,7 +128,7 @@ export class Game {
       this.currentRoom = this.currentRoom.getNeighbor(direction)
       console.log(this.currentRoom.print(this.adventurer))
     } else {
-      console.log("You can't go that way.\n")
+      console.log("You can't go that way.")
     }
     if (!this.currentRoom.dark || this.adventurer.light) {
       this.currentRoom.visited = true
@@ -113,9 +136,11 @@ export class Game {
   }
 
   processCommand (input) {
+    this.currentRoom.numActions++
     var command = new String(this.parser.processText(input))
     var commandTokens = command.split(' ')
     switch (commandTokens[0]) {
+      // add functionality for handling objects in inventory
       case 'inventory':
         console.log(this.adventurer.showInventory())
         break
@@ -169,6 +194,10 @@ export class Game {
         break
 
       case 'open':
+        if (commandTokens[1] == 'canopy') {
+          this.currentRoom.foe = new Bat()
+          // this.currentRoom.foe.reveal()
+        }
         var feature = this.currentRoom.features[0]
         var objects = []
         try {

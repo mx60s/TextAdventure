@@ -1,8 +1,9 @@
-import { Item, Container, Door } from './features'
+import { Item, Container, Weapon } from './features'
 
 class Character {
-  constructor (health) {
+  constructor (health, weapon) {
     this.health = health
+    this.weapon = weapon
     this.inventory = new Container('inventory', '', '', '', [
       new Item('lint', 'A few pieces of lint.', '', '')
     ])
@@ -12,6 +13,31 @@ class Character {
 
   takeDamage (dmg) {
     health -= dmg
+  }
+}
+
+class Spirit extends Character {
+  constructor () {
+    super(12, new Weapon('claws', '', '', 5, 5, ''))
+  }
+
+  reveal () {
+    console.log(
+      'The spirit turns around to reveal herself, once-human eyes glaring at you with blind rage. In a flash she flies at you with her long nails bared.\n'
+    )
+  }
+}
+
+class Bat extends Character {
+  constructor () {
+    super(5, new Weapon('teeth', '', '', 3, 3, ''))
+    this.name = 'bat'
+  }
+
+  reveal () {
+    console.log(
+      'You hear a burst of flapping wings as suddenly a bat flies at your face, flashing its teeth and screeching.\n'
+    )
   }
 }
 
@@ -37,7 +63,7 @@ class Hero extends Character {
   }
 }
 
-class Ghost extends Character {
+/* class Ghost extends Character {
   constructor (health) {
     super(health)
   }
@@ -47,6 +73,6 @@ class Bat extends Character {
   constructor (health) {
     super(health)
   }
-}
+} */
 
-export { Character, Hero, Ghost, Bat }
+export { Character, Hero, Spirit, Bat }

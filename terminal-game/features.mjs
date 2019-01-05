@@ -39,6 +39,7 @@ class Door {
 }
 
 class Weapon extends Item {
+  // speed a 1-5 scale, strength being the max damage it may take
   constructor (name, description, where, strength, speed, takenText) {
     super(name, description, where, takenText)
     this.strength = strength
@@ -56,4 +57,4 @@ export function examine (item) {
   else return "There's nothing special about it."
 }
 
-export { Item, Container, Door }
+export { Item, Container, Door, Weapon }

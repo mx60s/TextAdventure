@@ -18,13 +18,13 @@ export class Room {
     this.east = null
     this.south = null
     this.west = null
+    this.numActions = 0 // number of actions carried out in room (for ghoul purposes)
   }
 
   print (character) {
     var output = this.name + '\n'
     if (!this.dark || character.light) {
       if (!this.visited) output += this.description + ' '
-      if (this.foe) output += this.foe.encounter()
 
       for (var i = 0; i < this.features.length; i++) {
         output += printItem(this.features[i])
