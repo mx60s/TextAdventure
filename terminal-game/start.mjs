@@ -8,23 +8,22 @@ var cont = true
 
 console.log('\n============ Welcome to TextAdventure ============\n')
 console.log(adventure.currentRoom.print())
+adventure.currentRoom.visited = true
 
 while (cont) {
-  adventure.currentRoom.visited = true
   console.log()
   var input = readlineSync.question('>')
-  console.log()
-  if (input == 'Quit' || input == 'q' || input == 'Q') {
-    console.log('Thanks for playing!')
-    break
-  } else if(input == 'save'){
+  if (input == 'Quit' || input == 'quit' || input == 'q' || input == 'Q') {
+    console.log('Thanks for playing!\n')
+    cont = false
+  } else if (input == 'save') {
     save = adventure
     console.log('Saved.')
-  } else if(input == 'load'){
+  } else if (input == 'load') {
+    console.log('Loading...')
     adventure = save
     console.log(adventure.currentRoom.print())
-  }
-  else {
+  } else {
     adventure.processCommand(input)
   }
 }

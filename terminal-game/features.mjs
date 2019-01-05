@@ -1,14 +1,16 @@
 class Item {
-  constructor (name, description, where) {
+  constructor (name, description, where, takenText) {
     this.name = name
     this.description = description
     this.where = where
+    if (takenText.length > 0) this.takenText = takenText
+    else this.takenText = 'You stuff it in your coat pocket.'
   }
 }
 
 class Container extends Item {
-  constructor (name, description, where, contents) {
-    super(name, description, where)
+  constructor (name, description, where, takenText, contents) {
+    super(name, description, where, takenText)
     this.contents = contents
   }
 
@@ -25,12 +27,8 @@ class Container extends Item {
     }
     return objects
   }
-}
-
-class Light extends Item {
-  constructor (name, description, where){
-    super(name, description, where)
-    this.on = false
+  add (object) {
+    this.contents.push(object)
   }
 }
 
@@ -40,7 +38,13 @@ class Door {
   }
 }
 
-class Weapon extends Item {}
+class Weapon extends Item {
+  constructor (name, description, where, strength, speed, takenText) {
+    super(name, description, where, takenText)
+    this.strength = strength
+    this.speed = speed
+  }
+}
 
 export function printItem (item) {
   if (item.where) return item.where
@@ -52,4 +56,4 @@ export function examine (item) {
   else return "There's nothing special about it."
 }
 
-export { Item, Light, Container, Door }
+export { Item, Container, Door }

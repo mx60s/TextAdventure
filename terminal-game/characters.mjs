@@ -3,7 +3,9 @@ import { Item, Container, Door } from './features'
 class Character {
   constructor (health) {
     this.health = health
-    this.inventory = new Container('inventory', '', '', [])
+    this.inventory = new Container('inventory', '', '', '', [
+      new Item('lint', 'A few pieces of lint.', '', '')
+    ])
   }
 
   generateAttack (weapon) {}
@@ -11,28 +13,28 @@ class Character {
   takeDamage (dmg) {
     health -= dmg
   }
-
-  take (object) {
-    this.inventory.contents.push(object)
-    console.log('Taken.')
-  }
-
-  showInventory () {
-    this.inventory.open()
-    this.inventory.open = false
-  }
 }
 
 class Hero extends Character {
   constructor (health) {
     super(health)
+    this.light = false
     // this.inventory = new Container('inventory', '', '', '')
   }
 
-  recover () {
-    if (health < 10) health++
+  take (object) {
+    if (object.name == 'flashlight') {
+      this.light = true
+    }
+    this.inventory.add(object)
+    console.log('Taken. ' + object.takenText)
   }
-  generateAttack (weapon) {}
+
+  showInventory () {
+    // console.log(this.inventory)
+    this.inventory.open()
+    this.inventory.open = false
+  }
 }
 
 class Ghost extends Character {

@@ -27,7 +27,11 @@ export class TextParser {
       }
       // Picking something up
       else if (this.possessionWords.includes(tokens[0])) {
-        return 'take ' + tokens[1]
+        if (tokens[1] == 'mailbox') {
+          return 'The mailbox is too heavy. Why in the world would you want it anyway?'
+        } else if (this.enemyWords.includes(tokens[1])) {
+          return "You can't take prisoners!"
+        } else return 'take ' + tokens[1]
       }
       // Reading/Examining
       else if (this.senseWords.includes(tokens[0])) {
@@ -38,11 +42,10 @@ export class TextParser {
         return 'move ' + tokens[0]
       }
       // Opening something
-      else if (tokens[0] == 'open'){
+      else if (tokens[0] == 'open') {
         return 'open ' + tokens[1]
-      }
-      else {
-        return 'Could you repeat that?'
+      } else {
+        return "I'm sorry, I don't understand that."
       }
     }
   }
