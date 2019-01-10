@@ -1,14 +1,16 @@
 class Item {
-  constructor (name, description, where) {
+  constructor (name, description, where, takenText) {
     this.name = name
     this.description = description
     this.where = where
+    if (takenText.length > 0) this.takenText = takenText
+    else this.takenText = 'You stuff it in your coat pocket.'
   }
 }
 
 class Container extends Item {
-  constructor (name, description, where, contents) {
-    super(name, description, where)
+  constructor (name, description, where, takenText, contents) {
+    super(name, description, where, takenText)
     this.contents = contents
   }
   open () {

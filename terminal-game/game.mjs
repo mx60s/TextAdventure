@@ -104,7 +104,7 @@ export class Game {
 
     kitchen.east = entryRoom
 
-    var rooms = [frontYard, entryRoom, kitchen]
+    var rooms = [frontYard, entryRoom, kitchen, hallway, myRoom, attic]
     return rooms
   }
 
