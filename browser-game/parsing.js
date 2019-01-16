@@ -2,8 +2,8 @@ class TextParser {
   constructor () {
     this.attackWords = ['stab', 'attack', 'swing', 'hit', 'strike']
     this.possessionWords = ['take', 'grab', 'keep']
-    this.objectNouns = ['letter', 'mailbox', 'flashlight']
-    this.enemyWords = ['ghost', 'bat', 'bats', 'swarm']
+    this.objectNouns = ['letter', 'mailbox', 'key']
+    this.enemyWords = ['spirit', 'bat', 'bats', 'swarm']
     this.directionWords = ['north', 'east', 'south', 'west']
     this.senseWords = ['look', 'examine', 'read']
   }
@@ -27,7 +27,11 @@ class TextParser {
       }
       // Picking something up
       else if (this.possessionWords.includes(tokens[0])) {
-        return 'take ' + tokens[1]
+        if (tokens[1] == 'mailbox') {
+          return "Of course you can't take the mailbox. Smartass."
+        } else if (this.enemyWords.includes(tokens[1])) {
+          return "You can't take prisoners, what's wrong with you?"
+        } else return 'take ' + tokens[1]
       }
       // Reading/Examining
       else if (this.senseWords.includes(tokens[0])) {
@@ -38,11 +42,16 @@ class TextParser {
         return 'move ' + tokens[0]
       }
       // Opening something
-      else if (tokens[0] == 'open'){
+      else if (tokens[0] == 'open') {
         return 'open ' + tokens[1]
       }
-      else {
-        return 'Could you repeat that?'
+      // Help
+      else if (tokens[0] == 'help') {
+        var helptext =
+          'Moving around: [north | south | east | west]    Pick something up: [take | grab | keep] <object name>    Examine things: [examine | look | read] <object name>    Attacking: [stab | attack | swing | hit | strike] <enemy name>'
+        return helptext
+      } else {
+        return "I'm sorry, I don't understand that."
       }
     }
   }

@@ -1,7 +1,7 @@
 class Game {
   constructor () {
-    this.adventurer = new Hero()
-    this.ghost = new Ghost()
+    this.adventurer = new Hero(10)
+    // this.ghost = new Ghost()
     this.rooms = this.generateRooms()
     this.currentRoom = this.rooms[0]
     this.parser = new TextParser()
@@ -13,7 +13,7 @@ class Game {
       'You are facing a stately blue house to the north. Dry leaves litter the ground from the looming oak trees. The front door hangs loosley on its hinges, slightly ajar.'
     var letter = new Item(
       'letter',
-      "Welcome to this little text adventure, made by Maggie von Ebers. Type 'help' at any time to get a list of commands.",
+      '"Welcome to this little text adventure, made by Maggie von Ebers. Type \'help\' at any time to get a list of commands."',
       '',
       ''
     )
@@ -46,7 +46,8 @@ class Game {
       'Kitchen',
       'You are standing in the doorway of an airy kitchen, with light pouring in from the windows to the backyard. A fine layer of dust coats the table.',
       false,
-      []
+      [],
+      ''
     )
 
     var attic = new Room(
@@ -126,7 +127,7 @@ class Game {
       !this.currentRoom.exits[direction].locked
     ) {
       this.currentRoom = this.currentRoom.getNeighbor(direction)
-      output = this.currentRoom.print()
+      output = this.currentRoom.print(this.adventurer)
     } else {
       output.push("You can't go that way.")
     }
@@ -180,9 +181,17 @@ class Game {
       case 'examine':
         var feature
         var found = false
-        for (feature in this.currentRoom.features) {
+        for (var i = 0; i < this.currentRoom.features.length; i++) {
+          feature = this.currentRoom.features[i]
           if (feature.name == commandTokens[1]) {
-            output.push(feature.examine())
+            output.push(examine(feature))
+            found = true
+          }
+        }
+        for (var i = 0; i < this.adventurer.inventory.contents.length; i++) {
+          // output.push(this.adventurer.inventory.contents[i].name)
+          if (this.adventurer.inventory.contents[i].name == commandTokens[1]) {
+            output.push(examine(this.adventurer.inventory.contents[i]))
             found = true
           }
         }
@@ -193,7 +202,7 @@ class Game {
 
       case 'look':
         this.currentRoom.visited = false
-        output = output.concat(this.currentRoom.print())
+        output = output.concat(this.currentRoom.print(this.adventurer))
         break
 
       case 'open':

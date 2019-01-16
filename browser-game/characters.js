@@ -1,26 +1,16 @@
 class Character {
-  constructor (health) {
+  constructor (health, weapon) {
     this.health = health
-    this.inventory = new Container('inventory', '', '', [])
+    this.weapon = weapon
+    this.inventory = new Container('inventory', '', '', '', [
+      new Item('lint', 'A few pieces of lint.', '', '')
+    ])
   }
 
   generateAttack (weapon) {}
 
   takeDamage (dmg) {
     health -= dmg
-  }
-
-  take (object) {
-    this.inventory.contents.push(object)
-    return 'Taken.'
-  }
-
-  showInventory () {
-    var out = this.inventory.open()
-    // console.log(out[0])
-    var output = out[0]
-    this.inventory.open = false
-    return output
   }
 }
 
@@ -43,22 +33,28 @@ class Bat extends Character {
   }
 
   reveal () {
-    console.log(
-      'You hear a burst of flapping wings as suddenly a bat flies at your face, flashing its teeth and screeching.\n'
-    )
+    return 'You hear a burst of flapping wings as suddenly a bat flies at your face, flashing its teeth and screeching.'
   }
 }
 
 class Hero extends Character {
   constructor (health) {
     super(health)
+    this.light = false
     // this.inventory = new Container('inventory', '', '', '')
   }
 
   recover () {
     if (health < 10) health++
   }
-  generateAttack (weapon) {}
+
+  take (object) {
+    if (object.name == 'flashlight') {
+      this.light = true
+    }
+    this.inventory.add(object)
+    return object.takenText
+  }
 
   showInventory () {
     // console.log(this.inventory)
@@ -66,16 +62,3 @@ class Hero extends Character {
     return this.inventory.open() // check the output on this
   }
 }
-
-/* class Ghost extends Character {
-  constructor (health) {
-    super(health)
-  }
-}
-
-class Bat extends Character {
-  constructor (health) {
-    super(health)
-  }
-}
- */

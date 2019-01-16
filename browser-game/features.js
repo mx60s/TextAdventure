@@ -28,6 +28,9 @@ class Container extends Item {
     var out = [output, objects]
     return out
   }
+  add (object) {
+    this.contents.push(object)
+  }
 }
 
 class Door {
@@ -36,7 +39,14 @@ class Door {
   }
 }
 
-class Weapon extends Item {}
+class Weapon extends Item {
+  // speed a 1-5 scale, strength being the max damage it may take
+  constructor (name, description, where, strength, speed, takenText) {
+    super(name, description, where, takenText)
+    this.strength = strength
+    this.speed = speed
+  }
+}
 
 function printItem (item) {
   if (item.where) return item.where

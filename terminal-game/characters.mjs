@@ -63,16 +63,4 @@ class Hero extends Character {
   }
 }
 
-/* class Ghost extends Character {
-  constructor (health) {
-    super(health)
-  }
-}
-
-class Bat extends Character {
-  constructor (health) {
-    super(health)
-  }
-} */
-
 export { Character, Hero, Spirit, Bat }
